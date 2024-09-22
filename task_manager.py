@@ -12,3 +12,6 @@ class TaskManager:
         new_task = Task(new_id, description, Status.TODO)
         self._task_repository.save_task(new_task)
         return new_id
+
+    def delete_task(self, task_id):
+        return self._task_repository.delete_task(task_id)
