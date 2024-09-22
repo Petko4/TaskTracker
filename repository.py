@@ -1,10 +1,16 @@
 import json
 from abc import ABC, abstractmethod
 
+from task import Task
+
 
 class TaskRepository(ABC):
     @abstractmethod
     def save_task(self, task):
+        pass
+
+    @abstractmethod
+    def delete_task(self, task_id):
         pass
 
 
@@ -15,7 +21,7 @@ class JSONFileTaskRepository(TaskRepository):
     def _load_tasks(self):
         try:
             with open(self._filename, "r") as file:
-                return json.load(file)
+                return [Task.from_dict(task) for task in json.load(file)]
         except FileNotFoundError:
             return []
 
@@ -27,6 +33,12 @@ class JSONFileTaskRepository(TaskRepository):
         tasks = self._load_tasks()
         tasks.append(task)
         self._save_tasks(tasks)
+
+    def delete_task(self, task_id):
+        tasks = self._load_tasks()
+        filtered_tasks = [task for task in tasks if task.get_id() != task_id]
+        self._save_tasks(filtered_tasks)
+        return len(tasks) > len(filtered_tasks)
 
 
 class IdRepository(ABC):
