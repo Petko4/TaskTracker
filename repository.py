@@ -13,6 +13,9 @@ class TaskRepository(ABC):
     def delete_task(self, task_id):
         pass
 
+    @abstractmethod
+    def update_task(self, task_id, description):
+        pass
 
 class JSONFileTaskRepository(TaskRepository):
     def __init__(self, filename):
@@ -39,6 +42,19 @@ class JSONFileTaskRepository(TaskRepository):
         filtered_tasks = [task for task in tasks if task.get_id() != task_id]
         self._save_tasks(filtered_tasks)
         return len(tasks) > len(filtered_tasks)
+
+    def update_task(self, task_id, description):
+        tasks = self._load_tasks()
+        is_task_updated = False
+
+        for task in tasks:
+            if task.get_id() == task_id:
+                task.set_description(description)
+                is_task_updated = True
+
+        self._save_tasks(tasks)
+
+        return is_task_updated
 
 
 class IdRepository(ABC):

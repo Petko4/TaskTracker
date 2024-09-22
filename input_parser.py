@@ -23,10 +23,23 @@ class InputParser:
                     if self._task_manager.delete_task(task_id):
                         ConsoleOutput.delete_task_output_success()
                     else:
-                        ConsoleOutput.delete_task_output_task_not_found(task_id)
+                        ConsoleOutput.task_not_found(task_id)
 
                 except ValueError:
-                    ConsoleOutput.delete_task_value_error()
+                    ConsoleOutput.task_value_error()
+            elif self._args[1] == Action.UPDATE and self._args[2] and isinstance(self._args[3], str):
+                try:
+                    task_id = int(self._args[2])
+                    new_description = self._args[3]
+                    if self._task_manager.update_task(task_id, new_description):
+                        ConsoleOutput.update_task_success()
+                    else:
+                        ConsoleOutput.task_not_found(task_id)
+
+
+                except ValueError:
+                    ConsoleOutput.task_value_error()
+
         except:
             ConsoleOutput.show_help()
 
@@ -34,3 +47,4 @@ class InputParser:
 class Action(StrEnum):
     ADD = "add",
     DELETE = "delete"
+    UPDATE = "update"

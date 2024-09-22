@@ -15,3 +15,6 @@ class TaskManager:
 
     def delete_task(self, task_id):
         return self._task_repository.delete_task(task_id)
+
+    def update_task(self, task_id, description):
+        return self._task_repository.update_task(task_id, description)
