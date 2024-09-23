@@ -17,6 +17,10 @@ class TaskRepository(ABC):
     def update_task(self, task_id, description):
         pass
 
+    def get_all_tasks(self):
+        pass
+
+
 class JSONFileTaskRepository(TaskRepository):
     def __init__(self, filename):
         self._filename = filename
@@ -55,6 +59,9 @@ class JSONFileTaskRepository(TaskRepository):
         self._save_tasks(tasks)
 
         return is_task_updated
+
+    def get_all_tasks(self):
+        return self._load_tasks()
 
 
 class IdRepository(ABC):

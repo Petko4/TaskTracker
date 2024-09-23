@@ -18,3 +18,6 @@ class TaskManager:
 
     def update_task(self, task_id, description):
         return self._task_repository.update_task(task_id, description)
+
+    def get_all_tasks(self):
+        return self._task_repository.get_all_tasks()
