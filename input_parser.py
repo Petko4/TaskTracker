@@ -35,12 +35,14 @@ class InputParser:
                         ConsoleOutput.update_task_success()
                     else:
                         ConsoleOutput.task_not_found(task_id)
-
-
                 except ValueError:
                     ConsoleOutput.task_value_error()
-
+            elif self._args[1] == Action.LIST:
+                tasks = self._task_manager.get_all_tasks()
+                ConsoleOutput.list_tasks(tasks)
         except:
+            ConsoleOutput.show_help()
+        else:
             ConsoleOutput.show_help()
 
 
@@ -48,3 +50,4 @@ class Action(StrEnum):
     ADD = "add",
     DELETE = "delete"
     UPDATE = "update"
+    LIST = "list"

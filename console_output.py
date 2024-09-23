@@ -5,6 +5,7 @@ commands:
     add "task description" - create a new task with TODO status
     delete <id> - delete the task
     update <id> "new description" - update existing task
+    list - show all tasks
 """
 
     new_task_template = """Task added successfully (ID: {0})"""
@@ -37,3 +38,6 @@ commands:
     def update_task_success():
         print(ConsoleOutput.update_task_template_success)
 
+    @staticmethod
+    def list_tasks(tasks):
+        [print(f"{task.get_id()} \t\"{task.get_description()}\" \t{task.get_status()}") for task in tasks]

@@ -24,6 +24,12 @@ class Task:
     def get_id(self):
         return self._id
 
+    def get_description(self):
+        return self._description
+
+    def get_status(self):
+        return self._status
+
     def to_dict(self):
         return {
             "id": self._id,
